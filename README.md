@@ -69,4 +69,4 @@ To tear down the dev environment, run:
 make down
 ```
 
-The `make up` command deletes the Kind cluster and the Docker registry container.
+The `make down` command deletes the Kind cluster and the Docker registry container.

@@ -1,34 +1,40 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
+apiVersion: fluxcd.controlplane.io/v1
+kind: ResourceSet
 metadata:
-  name: infra-source
+  name: infra
   namespace: flux-system
 spec:
-  insecure: true
-  interval: 1m
-  provider: generic
-  ref:
-    tag: local
-  url: oci://flux-registry:5000/flux-infra-sync
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: infra-sync
-  namespace: flux-system
-spec:
-  interval: 1h
-  retryInterval: 2m
-  timeout: 5m
-  path: ./
-  prune: true
-  wait: true
-  sourceRef:
-    kind: OCIRepository
-    name: infra-source
-  healthCheckExprs:
-    - apiVersion: fluxcd.controlplane.io/v1
-      kind: ResourceSet
-      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
-      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
+  inputsFrom:
+    - kind: ResourceSetInputProvider
+      name: registry
+  resources:
+    - apiVersion: source.toolkit.fluxcd.io/v1
+      kind: OCIRepository
+      metadata:
+        name: infra-source
+        namespace: << inputs.provider.namespace >>
+      spec:
+        interval: 1m
+        insecure: << inputs.insecure >>
+        url: "oci://<< inputs.repository >>/flux-infra-sync"
+        ref:
+          tag: << inputs.tag | quote >>
+    - apiVersion: kustomize.toolkit.fluxcd.io/v1
+      kind: Kustomization
+      metadata:
+        name: infra-sync
+        namespace: << inputs.provider.namespace >>
+      spec:
+        interval: 1h
+        retryInterval: 2m
+        timeout: 5m
+        path: ./
+        prune: true
+        wait: true
+        sourceRef:
+          kind: OCIRepository
+          name: infra-source
+        healthCheckExprs:
+          - apiVersion: fluxcd.controlplane.io/v1
+            kind: ResourceSet
+            current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
