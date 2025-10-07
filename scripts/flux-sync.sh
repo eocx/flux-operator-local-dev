@@ -6,7 +6,7 @@
 set -o errexit
 
 echo "Waiting for cluster addons sync to complete"
-flux reconcile kustomization infra-controllers --with-source
+flux reconcile kustomization infra-sync --with-source
 
 echo "Waiting for apps sync to complete"
 flux reconcile kustomization apps-sync --with-source

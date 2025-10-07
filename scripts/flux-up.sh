@@ -55,8 +55,8 @@ flux check
 echo "✔ Flux is ready"
 
 echo "Waiting for cluster addons sync to complete"
-kubectl -n flux-system wait --for=condition=Ready kustomization/infra-controllers --timeout=5m
-flux tree kustomization infra-controllers
+kubectl -n flux-system wait --for=condition=Ready kustomization/infra-sync --timeout=5m
+flux tree kustomization infra-sync
 
 echo "Waiting for apps sync to complete"
 kubectl -n flux-system wait --for=condition=Ready kustomization/apps-sync --timeout=5m

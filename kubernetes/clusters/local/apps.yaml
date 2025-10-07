@@ -1,5 +1,5 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
   name: apps-source
@@ -19,7 +19,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: infra-config
+    - name: infra-sync
   interval: 1h
   retryInterval: 30s
   timeout: 5m
