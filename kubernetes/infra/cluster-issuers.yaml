@@ -12,6 +12,9 @@ spec:
       namespace: flux-system
       ready: true
       readyExpr: "status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')"
+  commonMetadata:
+    labels:
+      toolkit.fluxcd.io/tenant: platform-team
   resources:
     - apiVersion: cert-manager.io/v1
       kind: ClusterIssuer

@@ -9,13 +9,14 @@ spec:
     - interval: "1h" # check for updates every hour
       version: "*" # upgrade to latest stable version
       namespace: monitoring
+  commonMetadata:
+    labels:
+      toolkit.fluxcd.io/tenant: platform-team
   resources:
     - apiVersion: v1
       kind: Namespace
       metadata:
         name: << inputs.namespace >>
-        labels:
-          toolkit.fluxcd.io/tenant: sre-team
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: OCIRepository
       metadata:

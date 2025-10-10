@@ -8,6 +8,9 @@ spec:
   inputs:
     - interval: "1h" # check for updates every hour
       version: "*" # upgrade to latest stable version
+  commonMetadata:
+    labels:
+      toolkit.fluxcd.io/tenant: platform-team
   resources:
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: OCIRepository
