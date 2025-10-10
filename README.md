@@ -24,6 +24,7 @@ The following tools are required:
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [Helm](https://helm.sh/docs/intro/install/)
 - [Flux CLI](https://fluxcd.io/docs/installation/)
+- [Flux Operator CLI](https://fluxcd.control-plane.io/operator/cli/)
 
 On macOS, you can install all the required tools with Homebrew by running:
 
@@ -49,6 +50,12 @@ The `make up` command performs the following steps:
 - installs Flux Operator on the cluster and configures it to reconcile the manifests from the local registry
 - waits for Flux to reconcile the cluster addons from `oci://flux-registry:5000/flux-infra-sync`
 - waits for Flux to reconcile the demo apps from `oci://flux-registry:5000/flux-apps-sync`
+
+To list all deployed resources, run:
+
+```shell
+flux-operator -n flux-system tree ks flux-system
+```
 
 ### Sync changes
 
