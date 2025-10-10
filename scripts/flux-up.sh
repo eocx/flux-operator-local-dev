@@ -17,6 +17,7 @@ cat <<EOF | helm -n flux-system upgrade --install flux oci://ghcr.io/controlplan
 instance:
   components:
     - source-controller
+    - source-watcher
     - kustomize-controller
     - helm-controller
     - notification-controller

@@ -15,10 +15,6 @@ install_cluster() {
 cat <<EOF | kind create cluster --name ${cluster_name} --wait 5m --config=-
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
-containerdConfigPatches:
-  - |-
-    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:${reg_localhost_port}"]
-      endpoint = ["http://${reg_name}:${reg_cluster_port}"]
 nodes:
   - role: control-plane
     image: kindest/node:${cluster_version}
