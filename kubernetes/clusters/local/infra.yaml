@@ -7,6 +7,9 @@ spec:
   inputsFrom:
     - kind: ResourceSetInputProvider
       name: registry
+  commonMetadata:
+    labels:
+      toolkit.fluxcd.io/tenant: platform-team
   resources:
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: OCIRepository

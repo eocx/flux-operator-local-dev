@@ -7,6 +7,9 @@ spec:
   inputsFrom:
     - kind: ResourceSetInputProvider
       name: registry
+  commonMetadata:
+    labels:
+      toolkit.fluxcd.io/tenant: dev-team
   resources:
     - apiVersion: v1
       kind: Namespace
@@ -58,3 +61,7 @@ spec:
         sourceRef:
           kind: OCIRepository
           name: apps-source
+        healthCheckExprs:
+          - apiVersion: fluxcd.controlplane.io/v1
+            kind: ResourceSet
+            current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
