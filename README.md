@@ -22,7 +22,6 @@ The following tools are required:
 - [Docker](https://docs.docker.com/get-docker/)
 - [Kubernetes KIND](https://kind.sigs.k8s.io/docs/user/quick-start/)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-- [Helm](https://helm.sh/docs/intro/install/)
 - [Flux CLI](https://fluxcd.io/docs/installation/)
 - [Flux Operator CLI](https://fluxcd.control-plane.io/operator/cli/)
 
@@ -54,7 +53,7 @@ The `make up` command performs the following steps:
 To list all deployed resources, run:
 
 ```shell
-flux-operator -n flux-system tree ks flux-system
+make ls
 ```
 
 ### Sync changes

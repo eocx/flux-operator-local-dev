@@ -49,7 +49,7 @@ EOF
 if [ "$(docker inspect -f '{{.State.Running}}' "${reg_name}" 2>/dev/null || true)" != 'true' ]; then
   echo "starting Docker registry on localhost:${reg_localhost_port}"
   docker run -d --restart=always -p "127.0.0.1:${reg_localhost_port}:${reg_cluster_port}" \
-    --name "${reg_name}" registry:2
+    --name "${reg_name}" registry:3
 fi
 
 # Create a cluster with the local registry enabled

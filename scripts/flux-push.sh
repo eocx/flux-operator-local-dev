@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2024 Stefan Prodan
+# Copyright 2025 Stefan Prodan
 # SPDX-License-Identifier: AGPL-3.0
 
 set -o errexit
@@ -12,6 +12,8 @@ registry='localhost:5050'
 diff_push() {
   artifact_name=$1
   artifact_path=$2
+  diff_exit_code=0
+  push_exit_code=0
 
   flux diff artifact oci://${artifact_name} \
     --path="${artifact_path}" &>/dev/null || diff_exit_code=$?
@@ -20,7 +22,7 @@ diff_push() {
     flux_output=$(flux push artifact oci://${artifact_name} \
       --path="${artifact_path}" \
       --source="$(git config --get remote.origin.url)" \
-      --revision="$(git rev-parse HEAD)" 2>&1) || exit_code=$?
+      --revision="$(git rev-parse HEAD)" 2>&1) || push_exit_code=$?
 
      oci_url=$(echo ${flux_output} | tail -n1 | awk '/to/{print $NF}')
   else
@@ -28,7 +30,7 @@ diff_push() {
     return
   fi
 
-  if [[  ${exit_code} -ne 0 ]]; then
+  if [[  ${push_exit_code} -ne 0 ]]; then
     echo ${flux_output}
     exit 1
   fi
