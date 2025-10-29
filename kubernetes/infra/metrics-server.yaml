@@ -5,6 +5,12 @@ metadata:
   namespace: flux-system
 spec:
   wait: true
+  dependsOn:
+    - apiVersion: fluxcd.controlplane.io/v1
+      kind: ResourceSet
+      name: cert-manager
+      namespace: flux-system
+      ready: true
   inputs:
     - interval: "1h" # check for updates every hour
       version: "*" # upgrade to latest stable version
@@ -50,5 +56,9 @@ spec:
           kind: OCIRepository
           name: << inputs.provider.name >>
         values:
+          apiService:
+            insecureSkipTLSVerify: false
+          tls:
+            type: cert-manager
           args:
             - --kubelet-insecure-tls

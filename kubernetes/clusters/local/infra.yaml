@@ -40,4 +40,4 @@ spec:
         healthCheckExprs:
           - apiVersion: fluxcd.controlplane.io/v1
             kind: ResourceSet
-            current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
+            current: status.conditions.filter(c, c.type == 'Ready').all(c, c.status == 'True' && c.observedGeneration == metadata.generation)
