@@ -3,12 +3,14 @@ kind: ResourceSet
 metadata:
   name: gateway-api
   namespace: flux-system
+  annotations:
+    fluxcd.controlplane.io/reconcileTimeout: "5m"
 spec:
-  wait: true
   inputs:
     - channel: experimental # or standard
       version: 1.x # auto upgrade to latest minor
       interval: 24h # check for updates daily
+  wait: true
   resources:
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: GitRepository

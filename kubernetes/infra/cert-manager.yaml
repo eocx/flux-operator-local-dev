@@ -3,8 +3,9 @@ kind: ResourceSet
 metadata:
   name: cert-manager
   namespace: flux-system
+  annotations:
+    fluxcd.controlplane.io/reconcileTimeout: "5m"
 spec:
-  wait: true
   inputs:
     - interval: "1h" # check for updates every hour
       version: "*" # upgrade to latest stable version
@@ -12,6 +13,7 @@ spec:
   commonMetadata:
     labels:
       toolkit.fluxcd.io/tenant: platform-team
+  wait: true
   resources:
     - apiVersion: v1
       kind: Namespace

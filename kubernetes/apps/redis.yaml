@@ -22,14 +22,14 @@ metadata:
   annotations:
     fluxcd.controlplane.io/reconcileTimeout: "5m"
 spec:
-  wait: true
-  serviceAccountName: dev-team
   inputsFrom:
     - kind: ResourceSetInputProvider
       name: redis-latest
+  serviceAccountName: dev-team
   commonMetadata:
     labels:
       app.kubernetes.io/name: redis
+  wait: true
   resources:
     - apiVersion: v1
       kind: ServiceAccount

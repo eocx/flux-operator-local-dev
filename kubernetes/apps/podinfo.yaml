@@ -20,20 +20,20 @@ metadata:
   annotations:
     fluxcd.controlplane.io/reconcileTimeout: "5m"
 spec:
-  wait: true
-  serviceAccountName: dev-team
+  inputsFrom:
+    - kind: ResourceSetInputProvider
+      name: podinfo-latest
   dependsOn:
     - apiVersion: apps/v1
       kind: Deployment
       name: redis
       namespace: apps
       ready: true
-  inputsFrom:
-    - kind: ResourceSetInputProvider
-      name: podinfo-latest
+  serviceAccountName: dev-team
   commonMetadata:
     labels:
       app.kubernetes.io/name: podinfo
+  wait: true
   resources:
     - apiVersion: v1
       kind: ServiceAccount

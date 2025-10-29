@@ -3,8 +3,9 @@ kind: ResourceSet
 metadata:
   name: metrics-server
   namespace: flux-system
+  annotations:
+    fluxcd.controlplane.io/reconcileTimeout: "5m"
 spec:
-  wait: true
   dependsOn:
     - apiVersion: fluxcd.controlplane.io/v1
       kind: ResourceSet
@@ -18,6 +19,7 @@ spec:
   commonMetadata:
     labels:
       toolkit.fluxcd.io/tenant: platform-team
+  wait: true
   resources:
     - apiVersion: v1
       kind: Namespace
